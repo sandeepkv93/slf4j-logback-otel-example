@@ -8,19 +8,26 @@ receivers:
 
 processors:
   batch:
+    timeout: 1s
+    send_batch_size: 1024
+  attributes:
+    actions:
+      - action: insert
+        key: attributes.logstash
+        from_attribute: body
 
 exporters:
   debug:
     verbosity: detailed
   file:
     path: /logs/otel-logs.log
-    flush_interval: 100ms
+    format: json
 
 service:
   pipelines:
     logs:
       receivers: [otlp]
-      processors: [batch]
+      processors: [batch, attributes]
       exporters: [debug, file]
 
   telemetry:

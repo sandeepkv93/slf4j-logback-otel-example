@@ -9,10 +9,6 @@ rm -rf logs
 # Create necessary directories
 mkdir -p logs
 
-# Create empty log files with proper permissions
-#touch logs/otel-logs.json
-#chmod 666 logs/otel-logs.json
-
 # Start the containers
 docker-compose up -d
 

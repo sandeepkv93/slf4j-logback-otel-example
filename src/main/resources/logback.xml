@@ -38,12 +38,22 @@
     <!-- OpenTelemetry Appender -->
     <appender name="OTEL"
               class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
+        <!-- Enable all attribute capture -->
         <captureExperimentalAttributes>true</captureExperimentalAttributes>
-        <!-- include src origin info -->
-        <captureCodeAttributes>true</captureCodeAttributes>
-        <!-- include slf4j key/value arguments -->
+        <captureContextDataAttributes>true</captureContextDataAttributes>
+        <captureMarkerAttributes>true</captureMarkerAttributes>
         <captureKeyValuePairAttributes>true</captureKeyValuePairAttributes>
         <captureMdcAttributes>*</captureMdcAttributes>
+        <captureCodeAttributes>true</captureCodeAttributes>
+
+        <!-- Add LogstashEncoder for structured logging -->
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+            <includeContext>true</includeContext>
+            <includeStructuredArguments>true</includeStructuredArguments>
+            <includeMdcKeyName>*</includeMdcKeyName>
+            <renderJsonMessages>true</renderJsonMessages>
+            <customFields>{"service_name":"user-service"}</customFields>
+        </encoder>
     </appender>
 
     <!-- Framework specific loggers -->
